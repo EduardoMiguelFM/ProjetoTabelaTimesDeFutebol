@@ -1,5 +1,7 @@
 package models;
 
+import enumns.TipoTimeEnum;
+
 import java.util.UUID;
 
 public class Time {
@@ -24,7 +26,9 @@ private int derrotas;
 
 private int saldoDeGols;
 
-    public Time(String nome, int titulos, int torcida, int anoDeFundacao, int vitorias, int derrotas, int saldoDeGols) {
+private TipoTimeEnum nacionalidade;
+
+    public Time(String nome, int titulos, int torcida, int anoDeFundacao, int vitorias, int derrotas, int saldoDeGols, TipoTimeEnum nacionalidade) {
         this.nome = nome;
         this.titulos = titulos;
         this.torcida = torcida;
@@ -84,6 +88,14 @@ private int saldoDeGols;
 
     public int getDerrotas() {
         return derrotas;
+    }
+
+    public TipoTimeEnum getTipotime() {
+        return nacionalidade;
+    }
+
+    public void setTipotime(TipoTimeEnum nacionalidade) {
+        this.nacionalidade = nacionalidade;
     }
 
     public void setDerrotas(int derrotas) {
