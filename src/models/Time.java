@@ -36,6 +36,7 @@ private TipoTimeEnum nacionalidade;
         this.vitorias = vitorias;
         this.derrotas = derrotas;
         this.saldoDeGols = saldoDeGols;
+        this.nacionalidade = nacionalidade;
     }
 
     public UUID getCodigo() {

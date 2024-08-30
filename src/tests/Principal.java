@@ -4,11 +4,14 @@ import enumns.TipoTimeEnum;
 import models.Time;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
- public class Principal {
+import java.util.stream.Collectors;
 
-     private static List<Time> times = new ArrayList<>();
+public class Principal {
+
+     public static List<Time> times = new ArrayList<>();
         public static void main(String[] args) {
             Scanner scanner = new Scanner(System.in);
 
@@ -22,6 +25,8 @@ import java.util.Scanner;
                     "\n3- Consultar por ..." +
                     "\n4- Alterar Times" +
                     "\n5- Excluir Times" +
+                    "\n6- Consultar por Nacionalidade"+
+                    "\n7- Consultar por Time Mais Titulos"+
                     "\nDigite a operação desejada: ");
             int escolha = scanner.nextInt();
             scanner.nextLine();
@@ -46,6 +51,23 @@ import java.util.Scanner;
                 case 5:
                     excluirTime(scanner);
                     break;
+                case 6:
+                    System.out.println("Digite a nacionalidade(BRASILEIRO,PORTUGUES,INGLES,FRANCES,ARGENTINO,ESPANHOL")
+                    ;TipoTimeEnum nacionalidade = TipoTimeEnum.valueOf(scanner.nextLine().toUpperCase());
+                    buscarTimeNacionalidade(nacionalidade);
+                    break;
+                case 7:
+                    System.out.println("Digite o número mínimo de títulos:");
+                    int minTitulos = scanner.nextInt();
+                    List<Time> timesComMaisTitulos = buscarTimeComMaisTitulos(minTitulos);
+                    timesComMaisTitulos.forEach(Principal::exibirDetalhesTime);
+                    break;
+                case 8:
+                    System.out.println("Digite o número minimo da torcida: ");
+                    int minTorcida = scanner.nextInt();
+                    List<Time> timesComMaisTorcidas = buscarTimeComMaisTorcida(minTorcida);
+                    timesComMaisTorcidas.forEach(Principal::exibirDetalhesTime);
+
 
                 default:
                     System.out.println("Opção inválida");
@@ -303,4 +325,33 @@ import java.util.Scanner;
          }return;
          }
          System.out.println("Time não encontrado!");
-     }}
+     }
+    public static void buscarTimeNacionalidade(TipoTimeEnum nacionalidade) {
+        System.out.println("Times " + nacionalidade + ":");
+        times.stream()
+                .filter(time -> time.getTipotime() == nacionalidade)
+                .sorted(Comparator.comparing(Time::getNome))
+                .forEach(time -> System.out.println(time.getCodigo() + "-" + time.getNome()));
+
+    }
+    public static List<Time> buscarTimeComMaisTitulos(int numeroTitulos){
+          return times.stream()
+                  .filter(time -> time.getTitulos() > numeroTitulos)
+                  .sorted(Comparator.comparingInt(Time::getTitulos)
+                  .reversed())
+                  .collect(Collectors.toList());
+
+    }
+    public static List<Time> buscarTimeComMaisTorcida(int numeroTorcida){
+            return times.stream()
+                    .filter(time -> time.getTorcida() > numeroTorcida)
+                    .sorted(Comparator.comparing(Time::getTorcida)
+                    .reversed())
+                    .collect(Collectors.toList());
+
+
+
+    }
+
+
+ }
