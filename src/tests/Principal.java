@@ -12,7 +12,9 @@ import java.util.Scanner;
         public static void main(String[] args) {
             Scanner scanner = new Scanner(System.in);
 
-        while (true) {
+        boolean executando = true;
+
+        while (executando) {
             System.out.println("Menu" +
                     "\n0- Sair" +
                     "\n1- Cadastrar Times" +
@@ -27,6 +29,7 @@ import java.util.Scanner;
             switch (escolha){
                 case 0:
                     System.out.println("Saindo do programa");
+                    executando = false;
                     break;
                 case 1:
                     cadastrarTime(scanner);
@@ -39,6 +42,9 @@ import java.util.Scanner;
                     break;
                 case 4:
                     alterarTimes(scanner);
+                    break;
+                case 5:
+                    excluirTime(scanner);
                     break;
 
                 default:
@@ -105,6 +111,30 @@ import java.util.Scanner;
          times.add(novoTime);
          System.out.println("Time cadastrado com sucesso!");
 
+     }
+
+
+     //Metodo para listar o time, utilizando for para criar o id/indice, ao criar sera numerado ao lado do time o seu id.Ordem sequencial
+     public static void listarTimes() {
+         if (times.isEmpty()) {
+             System.out.println("Nao foi encontrado nenhum time cadastrado, por favor cadastrar um");
+         } else {
+             System.out.println("Lista de times");
+             System.out.println("-----------------------");
+             for (int i = 0; i < times.size(); i++) {
+                 Time time = times.get(i);
+                 System.out.println((i+1) +
+                         ". " + time.getNome() +
+                         "\n Fundado em: " + time.getAnoDeFundacao() +
+                         "\n Nacionalidade: "+ time.getTipotime()+
+                         "\n Titulos: " + time.getTitulos() +
+                         "\n Torcedores: " + time.getTorcida() +
+                         "\n Vitorias: " + time.getVitorias() +
+                         "\n Derrotas: " + time.getDerrotas() +
+                         "\n Saldo de Gols: " + time.getSaldoDeGols()+
+                         "\n-----------------------");
+             }
+         }
      }
 
 
@@ -254,26 +284,17 @@ import java.util.Scanner;
          );
      }
 
+     // Metodo para excluirTime, utilizando .remove para remover o time informado pelo usuario
+     public static void excluirTime(Scanner scanner){
+         System.out.println("Digite o nome do time que deseja excluir: ");
+         String nomeTime = scanner.nextLine();
 
-     //Metodo para listar o time, utilizando for para criar o id/indice, ao criar sera numerado ao lado do time o seu id.Ordem sequencial
-     public static void listarTimes() {
-         if (times.isEmpty()) {
-             System.out.println("Nao foi encontrado nenhum time cadastrado, por favor cadastrar um");
-         } else {
-             System.out.println("Lista de times");
-             for (int i = 0; i < times.size(); i++) {
-                 Time time = times.get(i);
-                 System.out.println((i+1) +
-                         "\n. " + time.getNome() +
-                         "\n Fundado em: " + time.getAnoDeFundacao() +
-                         "\n Nacionalidade: "+ time.getTipotime()+
-                         "\n Titulos: " + time.getTitulos() +
-                         "\n Torcedores: " + time.getTorcida() +
-                         "\n Vitorias: " + time.getVitorias() +
-                         "\n Derrotas: " + time.getDerrotas() +
-                         "\n Saldo de Gols: " + time.getSaldoDeGols()+
-                         "\n-----------------------");
+         for (int i = 0; i < times.size(); i++) {
+             if (times.get(i).getNome().equalsIgnoreCase(nomeTime)) {
+                 Time timeRemovido = times.remove(i);
+                 System.out.println("Time " + timeRemovido.getNome() + " foi removido com sucesso!");
+                 return;
              }
          }
-     }
- }
+         System.out.println("Time não encontrado!");
+     }}
