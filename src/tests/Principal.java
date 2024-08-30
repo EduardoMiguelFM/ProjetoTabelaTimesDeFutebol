@@ -290,11 +290,17 @@ import java.util.Scanner;
          String nomeTime = scanner.nextLine();
 
          for (int i = 0; i < times.size(); i++) {
-             if (times.get(i).getNome().equalsIgnoreCase(nomeTime)) {
-                 Time timeRemovido = times.remove(i);
-                 System.out.println("Time " + timeRemovido.getNome() + " foi removido com sucesso!");
-                 return;
+             System.out.println("Tem certeza que deseja excluir o seu time?");
+             String confirmacao = scanner.nextLine();
+             if(confirmacao.equalsIgnoreCase("S")) {
+                 if (times.get(i).getNome().equalsIgnoreCase(nomeTime)) {
+                     Time timeRemovido = times.remove(i);
+                     System.out.println("Time " + timeRemovido.getNome() + " foi removido com sucesso!");
+
+            }else{
+                     System.out.println("Operação de exclusão cancelada.");
              }
+         }return;
          }
          System.out.println("Time não encontrado!");
      }}
